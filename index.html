@@ -742,6 +742,30 @@ FLOW: Validate → ask → advise → actionable steps. Recommend professional h
 LIMITS: No legal advice. No diagnosis. No toxic behavior.`;
 }
 
+// ─── GEMINI API ──────────────────────────────────
+const GEMINI_KEY = 'AIzaSyC_bWDjn_MJwda0Vrj4et0Z0MwLgTW2H54';
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+
+async function callGemini(userText) {
+  const sys = buildSystem();
+  const geminiHistory = messages.map(m => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: m.content }]
+  }));
+  const body = {
+    system_instruction: { parts: [{ text: sys }] },
+    contents: [...geminiHistory, { role: 'user', parts: [{ text: userText }] }],
+    generationConfig: { maxOutputTokens: 1000, temperature: 0.85 }
+  };
+  const res = await fetch(GEMINI_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || 'عذراً، حصل خطأ.';
+}
+
 // ─── CHAT ENGINE ────────────────────────────────
 let messages = [];
 let isTyping = false;
@@ -768,16 +792,10 @@ async function startChat() {
   document.getElementById('hdrBadge').textContent = `${th.emoji||'⚡'} ${th.label||''}`;
 
   showTyping();
-  const init = `[Onboarding complete. Lang:${profile.lang}, Gender:${profile.gender}, Rel:${profile.reltype}, Status:${profile.status||'-'}, Duration:${profile.duration||'-'}. Open session now.]`;
+  const init = `[Onboarding complete. Lang:${profile.lang}, Gender:${profile.gender}, Rel:${profile.reltype}, Status:${profile.status||'-'}, Duration:${profile.duration||'-'}. Open session now as ZAIN.]`;
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000,
-        system:buildSystem(), messages:[{role:'user',content:init}] })
-    });
-    const data = await res.json();
+    const reply = await callGemini(init);
     removeTyping();
-    const reply = data.content?.[0]?.text||'أهلاً! كيف أقدر أساعدك؟';
     messages.push({role:'user',content:init},{role:'assistant',content:reply});
     addMsg('ai',reply);
   } catch(e) {
@@ -812,17 +830,11 @@ async function sendMessage() {
   isTyping=true; sendBtn.disabled=true;
   inputEl.value=''; inputEl.style.height='auto';
   addMsg('user',text);
-  messages.push({role:'user',content:text});
   showTyping();
   try {
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000,
-        system:buildSystem(), messages })
-    });
-    const data=await res.json(); removeTyping();
-    const reply=data.content?.[0]?.text||'عذراً، حصل خطأ.';
-    messages.push({role:'assistant',content:reply});
+    const reply = await callGemini(text);
+    removeTyping();
+    messages.push({role:'user',content:text},{role:'assistant',content:reply});
     addMsg('ai',reply);
   } catch(e){ removeTyping(); addMsg('ai','⚡ في مشكلة بالاتصال.'); }
   isTyping=false; sendBtn.disabled=false; inputEl.focus();
