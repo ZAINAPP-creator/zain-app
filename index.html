@@ -14,7 +14,7 @@
   --border: rgba(255,255,255,0.07);
   --text: #ede9e3;
   --muted: rgba(237,233,227,0.4);
-
+ 
   /* Default = gold (before any selection) */
   --a: #e8c84a;
   --a2: #f0a500;
@@ -23,7 +23,7 @@
   --a-border: rgba(232,200,74,0.25);
   --theme-emoji: ⚡;
 }
-
+ 
 /* THEME OVERRIDES per relationship */
 body.theme-romantic {
   --a: #f06292; --a2: #e91e8c;
@@ -55,9 +55,9 @@ body.theme-self {
   --a-soft: rgba(38,198,218,0.10);
   --a-border: rgba(38,198,218,0.28);
 }
-
+ 
 * { margin:0; padding:0; box-sizing:border-box; }
-
+ 
 body {
   background: var(--bg);
   color: var(--text);
@@ -69,7 +69,7 @@ body {
   direction: rtl;
   transition: --a 0.5s;
 }
-
+ 
 /* Ambient orbs */
 .orb {
   position: fixed; border-radius: 50%;
@@ -78,7 +78,7 @@ body {
 }
 .orb1 { top:-15%; right:-8%; width:500px; height:500px; background: var(--a-glow); opacity:0.6; }
 .orb2 { bottom:-20%; left:-10%; width:420px; height:420px; background: var(--a-glow); opacity:0.4; }
-
+ 
 /* ─── HEADER ───────────────────────────────────── */
 header {
   position: relative; z-index: 20;
@@ -109,7 +109,7 @@ header {
   animation: blink 2.5s ease-in-out infinite;
 }
 @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
-
+ 
 .hdr-info { flex:1; min-width:0; }
 .hdr-info h1 {
   font-family: 'Cormorant Garamond', serif;
@@ -118,9 +118,9 @@ header {
   transition: color 0.5s;
 }
 .hdr-info p { font-size: 11px; color: var(--muted); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-
+ 
 .hdr-actions { display:flex; align-items:center; gap:8px; flex-shrink:0; }
-
+ 
 .hdr-badge {
   background: var(--a-soft);
   border: 1px solid var(--a-border);
@@ -128,7 +128,7 @@ header {
   font-size: 11px; color: var(--a); font-weight: 600;
   transition: all 0.5s; white-space:nowrap;
 }
-
+ 
 .reset-btn {
   display: flex; align-items:center; gap:6px;
   background: rgba(255,255,255,0.05);
@@ -145,7 +145,7 @@ header {
 }
 .reset-btn svg { transition: transform 0.3s; }
 .reset-btn:hover svg { transform: rotate(-45deg); }
-
+ 
 /* ─── ONBOARDING ───────────────────────────────── */
 #onboarding {
   flex:1; overflow-y:auto; padding:28px 18px 32px;
@@ -155,7 +155,7 @@ header {
 }
 #onboarding::-webkit-scrollbar { width:3px; }
 #onboarding::-webkit-scrollbar-thumb { background:var(--a-border); border-radius:2px; }
-
+ 
 /* Welcome hero */
 .ob-hero {
   text-align:center; padding:20px 0 32px;
@@ -165,7 +165,7 @@ header {
 }
 @keyframes fadeSlide { to{opacity:1;transform:translateY(0);} }
 .ob-hero { transform:translateY(18px); }
-
+ 
 .hero-ring {
   width:82px; height:82px; border-radius:50%;
   background: linear-gradient(135deg, var(--a), var(--a2));
@@ -181,7 +181,7 @@ header {
   transition: color 0.5s;
 }
 .ob-hero p { color:var(--muted); font-size:14px; line-height:1.9; font-weight:300; max-width:340px; }
-
+ 
 /* Step cards */
 .ob-card {
   width:100%; max-width:500px;
@@ -194,7 +194,7 @@ header {
   transition: border-color 0.5s;
 }
 .ob-card.touched { border-color: var(--a-border); }
-
+ 
 .ob-card-head {
   display: flex; align-items:center; gap:10px; margin-bottom:16px;
 }
@@ -210,9 +210,9 @@ header {
 }
 .ob-card-title { font-size:14px; font-weight:700; color:var(--text); }
 .ob-card-sub { font-size:12px; color:var(--muted); margin-top:2px; }
-
+ 
 .ob-opts { display:flex; flex-wrap:wrap; gap:8px; }
-
+ 
 .ob-opt {
   background: var(--s2);
   border: 1px solid var(--border);
@@ -245,7 +245,7 @@ header {
 .ob-opt.other {
   border-style:dashed; font-style:italic;
 }
-
+ 
 .ob-custom {
   width:100%; margin-top:10px;
   background: var(--s2); border:1px solid var(--border);
@@ -256,10 +256,10 @@ header {
 }
 .ob-custom.show { display:block; }
 .ob-custom:focus { border-color:var(--a-border); }
-
+ 
 /* Separator */
 .ob-sep { width:100%; max-width:500px; height:1px; background:var(--border); margin:4px 0 14px; }
-
+ 
 /* Start button */
 .ob-start-wrap {
   width:100%; max-width:500px; margin-top:4px;
@@ -278,25 +278,25 @@ header {
 .ob-start.ready { opacity:1; pointer-events:all; }
 .ob-start.ready:hover { transform:translateY(-3px); box-shadow:0 10px 30px var(--a-glow); }
 .ob-hint { text-align:center; font-size:11.5px; color:var(--muted); margin-top:10px; line-height:1.6; }
-
+ 
 /* ─── CHAT ─────────────────────────────────────── */
 #chatScreen { display:none; flex:1; flex-direction:column; overflow:hidden; }
 #chatScreen.active { display:flex; }
-
+ 
 #chat {
   flex:1; overflow-y:auto; padding:22px 18px;
   display:flex; flex-direction:column; gap:16px; scroll-behavior:smooth;
 }
 #chat::-webkit-scrollbar { width:3px; }
 #chat::-webkit-scrollbar-thumb { background:var(--a-border); border-radius:2px; }
-
+ 
 .msg {
   display:flex; gap:10px; max-width:84%;
   animation:fadeSlide 0.35s ease forwards; opacity:0; transform:translateY(10px);
 }
 .msg.ai { align-self:flex-start; }
 .msg.user { align-self:flex-end; flex-direction:row-reverse; }
-
+ 
 .m-av {
   width:32px; height:32px; border-radius:50%; flex-shrink:0;
   display:flex; align-items:center; justify-content:center;
@@ -306,7 +306,7 @@ header {
   transition: background 0.5s;
 }
 .msg.user .m-av { background:var(--s2); box-shadow:none; }
-
+ 
 .bubble {
   padding:12px 16px; border-radius:16px;
   font-size:13.5px; line-height:1.8; font-weight:400;
@@ -322,7 +322,7 @@ header {
   border-top-left-radius:4px; text-align:right;
   transition: border-color 0.5s;
 }
-
+ 
 .typing {
   display:flex; align-items:center; gap:4px;
   padding:12px 16px; background:var(--s1);
@@ -338,7 +338,7 @@ header {
 .td:nth-child(2){animation-delay:0.2s;}
 .td:nth-child(3){animation-delay:0.4s;}
 @keyframes td-anim { 0%,60%,100%{transform:translateY(0);opacity:0.3;} 30%{transform:translateY(-7px);opacity:1;} }
-
+ 
 /* Divider in chat */
 .chat-divider {
   display:flex; align-items:center; gap:10px;
@@ -347,7 +347,7 @@ header {
 .chat-divider::before,.chat-divider::after {
   content:''; flex:1; height:1px; background:var(--border);
 }
-
+ 
 /* Footer */
 footer {
   position:relative; z-index:10; padding:12px 16px 16px;
@@ -383,7 +383,7 @@ footer {
 #sendBtn:active { transform:scale(0.94); }
 #sendBtn:disabled { opacity:0.35; cursor:not-allowed; transform:none; }
 .ftr-note { text-align:center; font-size:11px; color:var(--muted); margin-top:8px; }
-
+ 
 /* New chat mini-btn in footer */
 .new-chat-btn {
   display:flex; align-items:center; gap:5px;
@@ -398,10 +398,10 @@ footer {
 </style>
 </head>
 <body>
-
+ 
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
-
+ 
 <!-- ─── HEADER ─── -->
 <header>
   <div class="hdr-avatar" id="hdrAvatar">
@@ -423,16 +423,16 @@ footer {
     </button>
   </div>
 </header>
-
+ 
 <!-- ─── ONBOARDING ─── -->
 <div id="onboarding">
-
+ 
   <div class="ob-hero">
     <div class="hero-ring" id="heroRing">⚡</div>
     <h2 id="heroTitle">ZAIN (زين)</h2>
     <p>قبل ما نبدأ، خليني أتعرف عليك شوية<br>عشان أعطيك استشارة تناسب وضعك بالضبط</p>
   </div>
-
+ 
   <!-- 01 Language -->
   <div class="ob-card" id="card-lang" style="animation-delay:0.1s">
     <div class="ob-card-head">
@@ -454,7 +454,7 @@ footer {
       </button>
     </div>
   </div>
-
+ 
   <!-- 02 Gender -->
   <div class="ob-card" id="card-gender" style="animation-delay:0.2s">
     <div class="ob-card-head">
@@ -476,7 +476,7 @@ footer {
       </button>
     </div>
   </div>
-
+ 
   <!-- 03 Relationship Type -->
   <div class="ob-card" id="card-reltype" style="animation-delay:0.3s">
     <div class="ob-card-head">
@@ -508,7 +508,7 @@ footer {
     </div>
     <input class="ob-custom" id="custom-reltype" placeholder="اكتب نوع العلاقة..." oninput="customPick('reltype',this.value)">
   </div>
-
+ 
   <!-- 04 Status -->
   <div class="ob-card" id="card-status" style="animation-delay:0.4s">
     <div class="ob-card-head">
@@ -543,7 +543,7 @@ footer {
     </div>
     <input class="ob-custom" id="custom-status" placeholder="اشرح وضعك بكلمتين..." oninput="customPick('status',this.value)">
   </div>
-
+ 
   <!-- 05 Duration -->
   <div class="ob-card" id="card-duration" style="animation-delay:0.5s">
     <div class="ob-card-head">
@@ -572,18 +572,18 @@ footer {
     </div>
     <input class="ob-custom" id="custom-duration" placeholder="مثلاً: 8 أشهر، 4 سنوات..." oninput="customPick('duration',this.value)">
   </div>
-
+ 
   <div class="ob-sep"></div>
-
+ 
   <div class="ob-start-wrap">
     <button class="ob-start" id="startBtn" onclick="startChat()">
       ⚡ &nbsp; ابدأ الاستشارة مع ZAIN
     </button>
     <p class="ob-hint">* اللغة، جنسك، ونوع العلاقة مطلوبين للبداية</p>
   </div>
-
+ 
 </div>
-
+ 
 <!-- ─── CHAT SCREEN ─── -->
 <div id="chatScreen">
   <div id="chat"></div>
@@ -607,7 +607,7 @@ footer {
     <div class="ftr-note">ZAIN يستمع بدون حكم • محادثتك خاصة</div>
   </footer>
 </div>
-
+ 
 <script>
 // ─── THEME MAP ───────────────────────────────────
 const THEMES = {
@@ -618,27 +618,27 @@ const THEMES = {
   self:     { cls:'theme-self',     emoji:'🧠', label:'ذاتية' },
   default:  { cls:'',               emoji:'⚡', label:'' },
 };
-
+ 
 function applyTheme(key) {
   const th = THEMES[key] || THEMES.default;
   document.body.className = th.cls;
-
+ 
   // Safely update hdrAvatar: keep the .hdr-dot child
   const av = document.getElementById('hdrAvatar');
   const dot = av.querySelector('.hdr-dot');
   av.innerHTML = '';
   av.appendChild(document.createTextNode(th.emoji || '⚡'));
   if (dot) av.appendChild(dot);
-
+ 
   // heroRing is text-only, safe to use textContent
   const hr = document.getElementById('heroRing');
   if (hr) hr.textContent = th.emoji || '⚡';
 }
-
+ 
 // ─── PROFILE ────────────────────────────────────
 const profile = { lang:null, gender:null, reltype:null, reltypeKey:null, status:null, duration:null };
 const REQUIRED = ['lang','gender','reltype'];
-
+ 
 function pick(key, val, btn) {
   profile[key] = val;
   const opts = btn.closest('.ob-opts');
@@ -649,7 +649,7 @@ function pick(key, val, btn) {
   document.getElementById('card-'+key)?.classList.add('touched');
   checkReady();
 }
-
+ 
 function pickReltype(themeKey, label, btn) {
   profile.reltype = label;
   profile.reltypeKey = themeKey;
@@ -662,7 +662,7 @@ function pickReltype(themeKey, label, btn) {
   applyTheme(themeKey);
   checkReady();
 }
-
+ 
 function showCustom(key, btn) {
   const opts = btn.closest('.ob-opts');
   opts.querySelectorAll('.ob-opt').forEach(b=>b.classList.remove('sel'));
@@ -673,7 +673,7 @@ function showCustom(key, btn) {
   else profile[key] = null;
   checkReady();
 }
-
+ 
 function customPick(key, val) {
   const v = val.trim();
   if(key==='reltype') { profile.reltype = v||null; profile.reltypeKey = 'default'; }
@@ -681,36 +681,36 @@ function customPick(key, val) {
   if(v) document.getElementById('card-'+key)?.classList.add('touched');
   checkReady();
 }
-
+ 
 function checkReady() {
   const ok = REQUIRED.every(k=>profile[k]);
   document.getElementById('startBtn').classList.toggle('ready', ok);
 }
-
+ 
 // ─── RESET ──────────────────────────────────────
 function resetAll() {
   profile.lang = profile.gender = profile.reltype = profile.reltypeKey = profile.status = profile.duration = null;
   messages = [];
-
+ 
   // Reset cards
   document.querySelectorAll('.ob-card').forEach(c=>c.classList.remove('touched'));
   document.querySelectorAll('.ob-opt').forEach(b=>b.classList.remove('sel'));
   document.querySelectorAll('.ob-custom').forEach(i=>{ i.classList.remove('show'); i.value=''; });
   document.getElementById('startBtn').classList.remove('ready');
   document.getElementById('chat').innerHTML = '';
-
+ 
   applyTheme('default');
   document.getElementById('hdrSub').textContent = 'مستشار العلاقات الذكي • متاح الآن';
   document.getElementById('hdrBadge').textContent = '🔒 آمن';
-
+ 
   document.getElementById('chatScreen').classList.remove('active');
   document.getElementById('chatScreen').style.display = '';
   document.getElementById('onboarding').style.display = '';
-
+ 
   // Scroll to top
   document.getElementById('onboarding').scrollTop = 0;
 }
-
+ 
 // ─── SYSTEM PROMPT ──────────────────────────────
 function buildSystem() {
   const lr = profile.lang==='ar' ? 'ALWAYS reply in Arabic only, warm dialect.'
@@ -719,33 +719,33 @@ function buildSystem() {
   const gr = profile.gender==='male' ? 'Address user in masculine Arabic form.'
     : profile.gender==='female' ? 'Address user in feminine Arabic form.' : '';
   return `You are ZAIN (زين) ⚡ — confident, empathetic AI relationship consultant.
-
+ 
 USER PROFILE (already known — do NOT ask again):
 - Language: ${profile.lang}
 - Gender: ${profile.gender}
 - Relationship type: ${profile.reltype}
 - Situation: ${profile.status||'not specified'}
 - Duration: ${profile.duration||'not specified'}
-
+ 
 LANGUAGE RULE (CRITICAL): ${lr} ${gr}
-
+ 
 PERSONALITY:
 - Confident, grounded — authority without arrogance
 - Warm, non-judgmental
 - Direct and practical
 - Emotionally intelligent — validate before advising
-
+ 
 FIRST MESSAGE: Warm personalized greeting referencing their situation. Ask ONE focused open question. Don't repeat known info.
-
+ 
 FLOW: Validate → ask → advise → actionable steps. Recommend professional help if serious harm.
-
+ 
 LIMITS: No legal advice. No diagnosis. No toxic behavior.`;
 }
-
+ 
 // ─── GEMINI API ──────────────────────────────────
 const GEMINI_KEY = 'AIzaSyC_bWDjn_MJwda0Vrj4et0Z0MwLgTW2H54';
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
-
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
+ 
 async function callGemini(userText) {
   const sys = buildSystem();
   const geminiHistory = messages.map(m => ({
@@ -765,14 +765,14 @@ async function callGemini(userText) {
   const data = await res.json();
   return data.candidates?.[0]?.content?.parts?.[0]?.text || 'عذراً، حصل خطأ.';
 }
-
+ 
 // ─── CHAT ENGINE ────────────────────────────────
 let messages = [];
 let isTyping = false;
 const chatEl = document.getElementById('chat');
 const inputEl = document.getElementById('userInput');
 const sendBtn = document.getElementById('sendBtn');
-
+ 
 inputEl.addEventListener('input', () => {
   inputEl.style.height='auto';
   inputEl.style.height=Math.min(inputEl.scrollHeight,100)+'px';
@@ -780,17 +780,17 @@ inputEl.addEventListener('input', () => {
 inputEl.addEventListener('keydown', e=>{
   if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}
 });
-
+ 
 async function startChat() {
   document.getElementById('onboarding').style.display='none';
   const cs = document.getElementById('chatScreen');
   cs.classList.add('active');
-
+ 
   const th = THEMES[profile.reltypeKey||'default'];
   document.getElementById('hdrSub').textContent =
     `${th.emoji||'⚡'} ${profile.reltype} • ${profile.lang==='en'?'English':profile.lang==='both'?'AR+EN':'عربي'}`;
   document.getElementById('hdrBadge').textContent = `${th.emoji||'⚡'} ${th.label||''}`;
-
+ 
   showTyping();
   const init = `[Onboarding complete. Lang:${profile.lang}, Gender:${profile.gender}, Rel:${profile.reltype}, Status:${profile.status||'-'}, Duration:${profile.duration||'-'}. Open session now as ZAIN.]`;
   try {
@@ -800,10 +800,11 @@ async function startChat() {
     addMsg('ai',reply);
   } catch(e) {
     removeTyping();
-    addMsg('ai','⚡ في مشكلة بالاتصال. جرب مرة ثانية.');
+    console.error('ZAIN Error:', e);
+    addMsg('ai','⚡ ' + (e.message || 'في مشكلة بالاتصال. جرب مرة ثانية.'));
   }
 }
-
+ 
 function addMsg(role,text) {
   const w=document.createElement('div'); w.className=`msg ${role}`;
   const av=document.createElement('div'); av.className='m-av';
@@ -812,7 +813,7 @@ function addMsg(role,text) {
   w.appendChild(av); w.appendChild(b);
   chatEl.appendChild(w); chatEl.scrollTop=chatEl.scrollHeight;
 }
-
+ 
 function showTyping() {
   const w=document.createElement('div'); w.className='msg ai'; w.id='typing';
   const av=document.createElement('div'); av.className='m-av';
@@ -823,7 +824,7 @@ function showTyping() {
   chatEl.appendChild(w); chatEl.scrollTop=chatEl.scrollHeight;
 }
 function removeTyping(){const t=document.getElementById('typing');if(t)t.remove();}
-
+ 
 async function sendMessage() {
   const text=inputEl.value.trim();
   if(!text||isTyping)return;
