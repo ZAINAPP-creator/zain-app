@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZAIN ⚡</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* ─── THEME VARIABLES ─────────────────────────── */
+:root {
+  --bg: #08080d;
+  --s1: #0f0f16;
+  --s2: #141420;
+  --border: rgba(255,255,255,0.07);
+  --text: #ede9e3;
+  --muted: rgba(237,233,227,0.4);
+
+  /* Default = gold (before any selection) */
+  --a: #e8c84a;
+  --a2: #f0a500;
+  --a-glow: rgba(232,200,74,0.18);
+  --a-soft: rgba(232,200,74,0.10);
+  --a-border: rgba(232,200,74,0.25);
+  --theme-emoji: ⚡;
+}
+
+/* THEME OVERRIDES per relationship */
+body.theme-romantic {
+  --a: #f06292; --a2: #e91e8c;
+  --a-glow: rgba(240,98,146,0.18);
+  --a-soft: rgba(240,98,146,0.10);
+  --a-border: rgba(240,98,146,0.28);
+}
+body.theme-family {
+  --a: #66bb6a; --a2: #2e7d32;
+  --a-glow: rgba(102,187,106,0.18);
+  --a-soft: rgba(102,187,106,0.10);
+  --a-border: rgba(102,187,106,0.28);
+}
+body.theme-friends {
+  --a: #42a5f5; --a2: #1565c0;
+  --a-glow: rgba(66,165,245,0.18);
+  --a-soft: rgba(66,165,245,0.10);
+  --a-border: rgba(66,165,245,0.28);
+}
+body.theme-work {
+  --a: #ab47bc; --a2: #6a1b9a;
+  --a-glow: rgba(171,71,188,0.18);
+  --a-soft: rgba(171,71,188,0.10);
+  --a-border: rgba(171,71,188,0.28);
+}
+body.theme-self {
+  --a: #26c6da; --a2: #00838f;
+  --a-glow: rgba(38,198,218,0.18);
+  --a-soft: rgba(38,198,218,0.10);
+  --a-border: rgba(38,198,218,0.28);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Tajawal', sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  direction: rtl;
+  transition: --a 0.5s;
+}
+
+/* Ambient orbs */
+.orb {
+  position: fixed; border-radius: 50%;
+  pointer-events: none; z-index: 0;
+  filter: blur(80px); transition: background 0.8s ease;
+}
+.orb1 { top:-15%; right:-8%; width:500px; height:500px; background: var(--a-glow); opacity:0.6; }
+.orb2 { bottom:-20%; left:-10%; width:420px; height:420px; background: var(--a-glow); opacity:0.4; }
+
+/* ─── HEADER ───────────────────────────────────── */
+header {
+  position: relative; z-index: 20;
+  display: flex; align-items: center; gap: 13px;
+  padding: 14px 20px;
+  background: rgba(8,8,13,0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(24px);
+  flex-shrink: 0;
+}
+.hdr-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--a), var(--a2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0; position: relative;
+  box-shadow: 0 0 18px var(--a-glow), 0 0 36px var(--a-glow);
+  animation: glow-pulse 3s ease-in-out infinite;
+  transition: background 0.6s, box-shadow 0.6s;
+}
+@keyframes glow-pulse {
+  0%,100% { box-shadow: 0 0 16px var(--a-glow), 0 0 32px var(--a-glow); }
+  50% { box-shadow: 0 0 28px var(--a-glow), 0 0 56px var(--a-glow); }
+}
+.hdr-dot {
+  position: absolute; bottom:2px; left:2px;
+  width:9px; height:9px; border-radius:50%;
+  background:#4ade80; border:2px solid var(--bg);
+  animation: blink 2.5s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+.hdr-info { flex:1; min-width:0; }
+.hdr-info h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--a); letter-spacing: 1.5px; direction:ltr;
+  transition: color 0.5s;
+}
+.hdr-info p { font-size: 11px; color: var(--muted); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+.hdr-actions { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+
+.hdr-badge {
+  background: var(--a-soft);
+  border: 1px solid var(--a-border);
+  border-radius: 20px; padding: 4px 11px;
+  font-size: 11px; color: var(--a); font-weight: 600;
+  transition: all 0.5s; white-space:nowrap;
+}
+
+.reset-btn {
+  display: flex; align-items:center; gap:6px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 7px 12px;
+  color: var(--muted); font-size: 12px;
+  cursor: pointer; font-family: 'Tajawal', sans-serif;
+  transition: all 0.2s; white-space:nowrap;
+}
+.reset-btn:hover {
+  background: rgba(255,80,80,0.1);
+  border-color: rgba(255,80,80,0.3);
+  color: #ff6b6b; transform: translateY(-1px);
+}
+.reset-btn svg { transition: transform 0.3s; }
+.reset-btn:hover svg { transform: rotate(-45deg); }
+
+/* ─── ONBOARDING ───────────────────────────────── */
+#onboarding {
+  flex:1; overflow-y:auto; padding:28px 18px 32px;
+  display:flex; flex-direction:column; align-items:center; gap:0;
+  position:relative; z-index:1;
+  scroll-behavior: smooth;
+}
+#onboarding::-webkit-scrollbar { width:3px; }
+#onboarding::-webkit-scrollbar-thumb { background:var(--a-border); border-radius:2px; }
+
+/* Welcome hero */
+.ob-hero {
+  text-align:center; padding:20px 0 32px;
+  display:flex; flex-direction:column; align-items:center; gap:14px;
+  width:100%; max-width:500px;
+  animation: fadeSlide 0.6s ease forwards; opacity:0;
+}
+@keyframes fadeSlide { to{opacity:1;transform:translateY(0);} }
+.ob-hero { transform:translateY(18px); }
+
+.hero-ring {
+  width:82px; height:82px; border-radius:50%;
+  background: linear-gradient(135deg, var(--a), var(--a2));
+  display:flex; align-items:center; justify-content:center;
+  font-size:34px; position:relative;
+  box-shadow: 0 0 0 12px var(--a-soft), 0 0 50px var(--a-glow);
+  animation: glow-pulse 3s ease-in-out infinite;
+  transition: background 0.6s, box-shadow 0.6s;
+}
+.ob-hero h2 {
+  font-family:'Cormorant Garamond',serif; font-size:30px;
+  color:var(--a); direction:ltr; letter-spacing:3px;
+  transition: color 0.5s;
+}
+.ob-hero p { color:var(--muted); font-size:14px; line-height:1.9; font-weight:300; max-width:340px; }
+
+/* Step cards */
+.ob-card {
+  width:100%; max-width:500px;
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px 20px;
+  margin-bottom: 14px;
+  animation: fadeSlide 0.5s ease forwards; opacity:0; transform:translateY(18px);
+  transition: border-color 0.5s;
+}
+.ob-card.touched { border-color: var(--a-border); }
+
+.ob-card-head {
+  display: flex; align-items:center; gap:10px; margin-bottom:16px;
+}
+.ob-step-num {
+  width:28px; height:28px; border-radius:50%;
+  background: var(--a-soft); border:1px solid var(--a-border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:800; color:var(--a);
+  flex-shrink:0; transition:all 0.5s;
+}
+.ob-card.touched .ob-step-num {
+  background: var(--a); color: var(--bg);
+}
+.ob-card-title { font-size:14px; font-weight:700; color:var(--text); }
+.ob-card-sub { font-size:12px; color:var(--muted); margin-top:2px; }
+
+.ob-opts { display:flex; flex-wrap:wrap; gap:8px; }
+
+.ob-opt {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 9px 14px;
+  color: var(--muted); font-size: 13px;
+  cursor: pointer; font-family: 'Tajawal', sans-serif;
+  transition: all 0.2s; font-weight: 500;
+  display:flex; align-items:center; gap:7px;
+  position:relative; overflow:hidden;
+}
+.ob-opt::before {
+  content:''; position:absolute; inset:0;
+  background: var(--a-soft); opacity:0;
+  transition: opacity 0.2s;
+}
+.ob-opt:hover { border-color:var(--a-border); color:var(--text); transform:translateY(-2px); }
+.ob-opt:hover::before { opacity:1; }
+.ob-opt.sel {
+  border-color:var(--a); color:var(--a); font-weight:700;
+  box-shadow: 0 0 0 3px var(--a-soft);
+}
+.ob-opt.sel::before { opacity:1; }
+.ob-opt .check {
+  width:16px; height:16px; border-radius:50%;
+  border:1.5px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; transition:all 0.2s; font-size:9px;
+}
+.ob-opt.sel .check { background:var(--a); border-color:var(--a); color:var(--bg); }
+.ob-opt.other {
+  border-style:dashed; font-style:italic;
+}
+
+.ob-custom {
+  width:100%; margin-top:10px;
+  background: var(--s2); border:1px solid var(--border);
+  border-radius:10px; padding:11px 14px;
+  color:var(--text); font-family:'Tajawal',sans-serif;
+  font-size:13px; outline:none; direction:rtl;
+  transition:border-color 0.3s; display:none;
+}
+.ob-custom.show { display:block; }
+.ob-custom:focus { border-color:var(--a-border); }
+
+/* Separator */
+.ob-sep { width:100%; max-width:500px; height:1px; background:var(--border); margin:4px 0 14px; }
+
+/* Start button */
+.ob-start-wrap {
+  width:100%; max-width:500px; margin-top:4px;
+  animation: fadeSlide 0.5s ease 0.6s forwards; opacity:0; transform:translateY(18px);
+}
+.ob-start {
+  width:100%; padding:15px;
+  background: linear-gradient(135deg, var(--a), var(--a2));
+  border:none; border-radius:14px;
+  color: var(--bg); font-family:'Tajawal',sans-serif;
+  font-size:15px; font-weight:900; cursor:pointer;
+  transition:all 0.3s; opacity:0.3; pointer-events:none;
+  box-shadow: 0 6px 24px var(--a-glow);
+  letter-spacing:0.5px;
+}
+.ob-start.ready { opacity:1; pointer-events:all; }
+.ob-start.ready:hover { transform:translateY(-3px); box-shadow:0 10px 30px var(--a-glow); }
+.ob-hint { text-align:center; font-size:11.5px; color:var(--muted); margin-top:10px; line-height:1.6; }
+
+/* ─── CHAT ─────────────────────────────────────── */
+#chatScreen { display:none; flex:1; flex-direction:column; overflow:hidden; }
+#chatScreen.active { display:flex; }
+
+#chat {
+  flex:1; overflow-y:auto; padding:22px 18px;
+  display:flex; flex-direction:column; gap:16px; scroll-behavior:smooth;
+}
+#chat::-webkit-scrollbar { width:3px; }
+#chat::-webkit-scrollbar-thumb { background:var(--a-border); border-radius:2px; }
+
+.msg {
+  display:flex; gap:10px; max-width:84%;
+  animation:fadeSlide 0.35s ease forwards; opacity:0; transform:translateY(10px);
+}
+.msg.ai { align-self:flex-start; }
+.msg.user { align-self:flex-end; flex-direction:row-reverse; }
+
+.m-av {
+  width:32px; height:32px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; margin-top:3px;
+  background: linear-gradient(135deg, var(--a), var(--a2));
+  box-shadow: 0 0 10px var(--a-glow);
+  transition: background 0.5s;
+}
+.msg.user .m-av { background:var(--s2); box-shadow:none; }
+
+.bubble {
+  padding:12px 16px; border-radius:16px;
+  font-size:13.5px; line-height:1.8; font-weight:400;
+  max-width:100%; word-break:break-word;
+}
+.msg.ai .bubble {
+  background:var(--s1); border:1px solid var(--border);
+  border-top-right-radius:4px;
+}
+.msg.user .bubble {
+  background: var(--s2);
+  border:1px solid var(--a-border);
+  border-top-left-radius:4px; text-align:right;
+  transition: border-color 0.5s;
+}
+
+.typing {
+  display:flex; align-items:center; gap:4px;
+  padding:12px 16px; background:var(--s1);
+  border:1px solid var(--border); border-radius:16px;
+  border-top-right-radius:4px; width:fit-content;
+}
+.td {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--a); opacity:0.4;
+  animation:td-anim 1.3s ease-in-out infinite;
+  transition:background 0.5s;
+}
+.td:nth-child(2){animation-delay:0.2s;}
+.td:nth-child(3){animation-delay:0.4s;}
+@keyframes td-anim { 0%,60%,100%{transform:translateY(0);opacity:0.3;} 30%{transform:translateY(-7px);opacity:1;} }
+
+/* Divider in chat */
+.chat-divider {
+  display:flex; align-items:center; gap:10px;
+  font-size:11px; color:var(--muted); margin:6px 0;
+}
+.chat-divider::before,.chat-divider::after {
+  content:''; flex:1; height:1px; background:var(--border);
+}
+
+/* Footer */
+footer {
+  position:relative; z-index:10; padding:12px 16px 16px;
+  background:rgba(8,8,13,0.97); border-top:1px solid var(--border);
+  backdrop-filter:blur(24px); flex-shrink:0;
+}
+.input-row { display:flex; gap:9px; align-items:flex-end; }
+.inp-wrap {
+  flex:1; display:flex; align-items:flex-end; gap:8px;
+  background:var(--s2); border:1px solid var(--border);
+  border-radius:14px; padding:9px 12px;
+  transition:border-color 0.3s, box-shadow 0.3s;
+}
+.inp-wrap:focus-within {
+  border-color:var(--a-border);
+  box-shadow:0 0 0 3px var(--a-soft);
+}
+#userInput {
+  flex:1; background:transparent; border:none; outline:none;
+  color:var(--text); font-family:'Tajawal',sans-serif;
+  font-size:14px; resize:none; max-height:100px;
+  line-height:1.6; direction:rtl; text-align:right;
+}
+#userInput::placeholder { color:var(--muted); }
+#sendBtn {
+  width:36px; height:36px; border-radius:10px; flex-shrink:0;
+  background:linear-gradient(135deg,var(--a),var(--a2));
+  border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s; box-shadow:0 4px 14px var(--a-glow);
+}
+#sendBtn:hover { transform:scale(1.08); box-shadow:0 6px 20px var(--a-glow); }
+#sendBtn:active { transform:scale(0.94); }
+#sendBtn:disabled { opacity:0.35; cursor:not-allowed; transform:none; }
+.ftr-note { text-align:center; font-size:11px; color:var(--muted); margin-top:8px; }
+
+/* New chat mini-btn in footer */
+.new-chat-btn {
+  display:flex; align-items:center; gap:5px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border); border-radius:10px;
+  padding:0 12px; height:36px; flex-shrink:0;
+  color:var(--muted); font-size:12px; cursor:pointer;
+  font-family:'Tajawal',sans-serif; white-space:nowrap;
+  transition:all 0.2s;
+}
+.new-chat-btn:hover { border-color:var(--a-border); color:var(--a); background:var(--a-soft); }
+</style>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="hdr-avatar" id="hdrAvatar">
+    ⚡
+    <div class="hdr-dot"></div>
+  </div>
+  <div class="hdr-info">
+    <h1>ZAIN (زين) ⚡</h1>
+    <p id="hdrSub">مستشار العلاقات الذكي • متاح الآن</p>
+  </div>
+  <div class="hdr-actions">
+    <div class="hdr-badge" id="hdrBadge">🔒 آمن</div>
+    <button class="reset-btn" onclick="resetAll()" title="بداية جديدة">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+        <path d="M3 3v5h5"/>
+      </svg>
+      بداية جديدة
+    </button>
+  </div>
+</header>
+
+<!-- ─── ONBOARDING ─── -->
+<div id="onboarding">
+
+  <div class="ob-hero">
+    <div class="hero-ring" id="heroRing">⚡</div>
+    <h2 id="heroTitle">ZAIN (زين)</h2>
+    <p>قبل ما نبدأ، خليني أتعرف عليك شوية<br>عشان أعطيك استشارة تناسب وضعك بالضبط</p>
+  </div>
+
+  <!-- 01 Language -->
+  <div class="ob-card" id="card-lang" style="animation-delay:0.1s">
+    <div class="ob-card-head">
+      <div class="ob-step-num" id="num-lang">١</div>
+      <div>
+        <div class="ob-card-title">اللغة / Language</div>
+        <div class="ob-card-sub">بأي لغة تحب نتكلم؟</div>
+      </div>
+    </div>
+    <div class="ob-opts">
+      <button class="ob-opt" onclick="pick('lang','ar',this)">
+        <div class="check">✓</div> 🇸🇦 عربي
+      </button>
+      <button class="ob-opt" onclick="pick('lang','en',this)">
+        <div class="check">✓</div> 🇬🇧 English
+      </button>
+      <button class="ob-opt" onclick="pick('lang','both',this)">
+        <div class="check">✓</div> 🌍 عربي + English
+      </button>
+    </div>
+  </div>
+
+  <!-- 02 Gender -->
+  <div class="ob-card" id="card-gender" style="animation-delay:0.2s">
+    <div class="ob-card-head">
+      <div class="ob-step-num" id="num-gender">٢</div>
+      <div>
+        <div class="ob-card-title">جنسك</div>
+        <div class="ob-card-sub">عشان ZAIN يخاطبك صح</div>
+      </div>
+    </div>
+    <div class="ob-opts">
+      <button class="ob-opt" onclick="pick('gender','male',this)">
+        <div class="check">✓</div> 👨 ذكر
+      </button>
+      <button class="ob-opt" onclick="pick('gender','female',this)">
+        <div class="check">✓</div> 👩 أنثى
+      </button>
+      <button class="ob-opt" onclick="pick('gender','other',this)">
+        <div class="check">✓</div> 🌈 أفضل لا أحدد
+      </button>
+    </div>
+  </div>
+
+  <!-- 03 Relationship Type -->
+  <div class="ob-card" id="card-reltype" style="animation-delay:0.3s">
+    <div class="ob-card-head">
+      <div class="ob-step-num" id="num-reltype">٣</div>
+      <div>
+        <div class="ob-card-title">نوع العلاقة</div>
+        <div class="ob-card-sub">عن أي علاقة بدك نتكلم؟</div>
+      </div>
+    </div>
+    <div class="ob-opts">
+      <button class="ob-opt" onclick="pickReltype('romantic','علاقة رومانسية',this)">
+        <div class="check">✓</div> 💕 رومانسية / شريك حياة
+      </button>
+      <button class="ob-opt" onclick="pickReltype('family','علاقة عائلية',this)">
+        <div class="check">✓</div> 👨‍👩‍👧 عائلية
+      </button>
+      <button class="ob-opt" onclick="pickReltype('friends','صداقة',this)">
+        <div class="check">✓</div> 🤝 صداقة
+      </button>
+      <button class="ob-opt" onclick="pickReltype('work','علاقة في الشغل',this)">
+        <div class="check">✓</div> 💼 علاقة في الشغل
+      </button>
+      <button class="ob-opt" onclick="pickReltype('self','علاقتي مع نفسي',this)">
+        <div class="check">✓</div> 🧠 علاقتي مع نفسي
+      </button>
+      <button class="ob-opt other" onclick="showCustom('reltype',this)">
+        <div class="check">✓</div> ✏️ غير ذلك...
+      </button>
+    </div>
+    <input class="ob-custom" id="custom-reltype" placeholder="اكتب نوع العلاقة..." oninput="customPick('reltype',this.value)">
+  </div>
+
+  <!-- 04 Status -->
+  <div class="ob-card" id="card-status" style="animation-delay:0.4s">
+    <div class="ob-card-head">
+      <div class="ob-step-num" id="num-status">٤</div>
+      <div>
+        <div class="ob-card-title">الوضع الحالي</div>
+        <div class="ob-card-sub">وضعك مع هالعلاقة هلأ؟</div>
+      </div>
+    </div>
+    <div class="ob-opts">
+      <button class="ob-opt" onclick="pick('status','خلاف أو مشكلة حالية',this)">
+        <div class="check">✓</div> 🔥 في خلاف / مشكلة
+      </button>
+      <button class="ob-opt" onclick="pick('status','إحساس بالبعد والفجوة',this)">
+        <div class="check">✓</div> 🌊 حاسس بالبعد
+      </button>
+      <button class="ob-opt" onclick="pick('status','أزمة ثقة',this)">
+        <div class="check">✓</div> 💔 أزمة ثقة
+      </button>
+      <button class="ob-opt" onclick="pick('status','مشكلة في التواصل',this)">
+        <div class="check">✓</div> 🗣️ مشكلة تواصل
+      </button>
+      <button class="ob-opt" onclick="pick('status','أفكر بإنهاء العلاقة',this)">
+        <div class="check">✓</div> 🚪 أفكر أنهيها
+      </button>
+      <button class="ob-opt" onclick="pick('status','أريد تطوير العلاقة',this)">
+        <div class="check">✓</div> ✨ بدي أطورها
+      </button>
+      <button class="ob-opt other" onclick="showCustom('status',this)">
+        <div class="check">✓</div> ✏️ غير ذلك...
+      </button>
+    </div>
+    <input class="ob-custom" id="custom-status" placeholder="اشرح وضعك بكلمتين..." oninput="customPick('status',this.value)">
+  </div>
+
+  <!-- 05 Duration -->
+  <div class="ob-card" id="card-duration" style="animation-delay:0.5s">
+    <div class="ob-card-head">
+      <div class="ob-step-num" id="num-duration">٥</div>
+      <div>
+        <div class="ob-card-title">مدة العلاقة <span style="font-size:11px;color:var(--muted);font-weight:400;">(اختياري)</span></div>
+        <div class="ob-card-sub">قديش صار على هالعلاقة؟</div>
+      </div>
+    </div>
+    <div class="ob-opts">
+      <button class="ob-opt" onclick="pick('duration','أقل من 6 أشهر',this)">
+        <div class="check">✓</div> 🌱 أقل من 6 شهور
+      </button>
+      <button class="ob-opt" onclick="pick('duration','سنة أو سنتين',this)">
+        <div class="check">✓</div> 📆 سنة–سنتين
+      </button>
+      <button class="ob-opt" onclick="pick('duration','أكثر من 3 سنوات',this)">
+        <div class="check">✓</div> 🏛️ +3 سنوات
+      </button>
+      <button class="ob-opt" onclick="pick('duration','علاقة عمر',this)">
+        <div class="check">✓</div> ♾️ علاقة عمر
+      </button>
+      <button class="ob-opt other" onclick="showCustom('duration',this)">
+        <div class="check">✓</div> ✏️ حدد أكثر...
+      </button>
+    </div>
+    <input class="ob-custom" id="custom-duration" placeholder="مثلاً: 8 أشهر، 4 سنوات..." oninput="customPick('duration',this.value)">
+  </div>
+
+  <div class="ob-sep"></div>
+
+  <div class="ob-start-wrap">
+    <button class="ob-start" id="startBtn" onclick="startChat()">
+      ⚡ &nbsp; ابدأ الاستشارة مع ZAIN
+    </button>
+    <p class="ob-hint">* اللغة، جنسك، ونوع العلاقة مطلوبين للبداية</p>
+  </div>
+
+</div>
+
+<!-- ─── CHAT SCREEN ─── -->
+<div id="chatScreen">
+  <div id="chat"></div>
+  <footer>
+    <div class="input-row">
+      <button class="new-chat-btn" onclick="resetAll()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        جديد
+      </button>
+      <div class="inp-wrap">
+        <textarea id="userInput" rows="1" placeholder="اكتب هنا... أنا سامعك ⚡"></textarea>
+      </div>
+      <button id="sendBtn" onclick="sendMessage()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="direction:ltr">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="ftr-note">ZAIN يستمع بدون حكم • محادثتك خاصة</div>
+  </footer>
+</div>
+
+<script>
+// ─── THEME MAP ───────────────────────────────────
+const THEMES = {
+  romantic: { cls:'theme-romantic', emoji:'💕', label:'رومانسية' },
+  family:   { cls:'theme-family',   emoji:'👨‍👩‍👧', label:'عائلية' },
+  friends:  { cls:'theme-friends',  emoji:'🤝', label:'صداقة' },
+  work:     { cls:'theme-work',     emoji:'💼', label:'شغل' },
+  self:     { cls:'theme-self',     emoji:'🧠', label:'ذاتية' },
+  default:  { cls:'',               emoji:'⚡', label:'' },
+};
+
+function applyTheme(key) {
+  const th = THEMES[key] || THEMES.default;
+  document.body.className = th.cls;
+
+  // Safely update hdrAvatar: keep the .hdr-dot child
+  const av = document.getElementById('hdrAvatar');
+  const dot = av.querySelector('.hdr-dot');
+  av.innerHTML = '';
+  av.appendChild(document.createTextNode(th.emoji || '⚡'));
+  if (dot) av.appendChild(dot);
+
+  // heroRing is text-only, safe to use textContent
+  const hr = document.getElementById('heroRing');
+  if (hr) hr.textContent = th.emoji || '⚡';
+}
+
+// ─── PROFILE ────────────────────────────────────
+const profile = { lang:null, gender:null, reltype:null, reltypeKey:null, status:null, duration:null };
+const REQUIRED = ['lang','gender','reltype'];
+
+function pick(key, val, btn) {
+  profile[key] = val;
+  const opts = btn.closest('.ob-opts');
+  opts.querySelectorAll('.ob-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  const ci = document.getElementById('custom-'+key);
+  if(ci){ ci.classList.remove('show'); ci.value=''; }
+  document.getElementById('card-'+key)?.classList.add('touched');
+  checkReady();
+}
+
+function pickReltype(themeKey, label, btn) {
+  profile.reltype = label;
+  profile.reltypeKey = themeKey;
+  const opts = btn.closest('.ob-opts');
+  opts.querySelectorAll('.ob-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  const ci = document.getElementById('custom-reltype');
+  ci.classList.remove('show'); ci.value='';
+  document.getElementById('card-reltype').classList.add('touched');
+  applyTheme(themeKey);
+  checkReady();
+}
+
+function showCustom(key, btn) {
+  const opts = btn.closest('.ob-opts');
+  opts.querySelectorAll('.ob-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  const ci = document.getElementById('custom-'+key);
+  ci.classList.add('show'); ci.focus();
+  if(key==='reltype') { profile.reltype = null; applyTheme('default'); }
+  else profile[key] = null;
+  checkReady();
+}
+
+function customPick(key, val) {
+  const v = val.trim();
+  if(key==='reltype') { profile.reltype = v||null; profile.reltypeKey = 'default'; }
+  else profile[key] = v||null;
+  if(v) document.getElementById('card-'+key)?.classList.add('touched');
+  checkReady();
+}
+
+function checkReady() {
+  const ok = REQUIRED.every(k=>profile[k]);
+  document.getElementById('startBtn').classList.toggle('ready', ok);
+}
+
+// ─── RESET ──────────────────────────────────────
+function resetAll() {
+  profile.lang = profile.gender = profile.reltype = profile.reltypeKey = profile.status = profile.duration = null;
+  messages = [];
+
+  // Reset cards
+  document.querySelectorAll('.ob-card').forEach(c=>c.classList.remove('touched'));
+  document.querySelectorAll('.ob-opt').forEach(b=>b.classList.remove('sel'));
+  document.querySelectorAll('.ob-custom').forEach(i=>{ i.classList.remove('show'); i.value=''; });
+  document.getElementById('startBtn').classList.remove('ready');
+  document.getElementById('chat').innerHTML = '';
+
+  applyTheme('default');
+  document.getElementById('hdrSub').textContent = 'مستشار العلاقات الذكي • متاح الآن';
+  document.getElementById('hdrBadge').textContent = '🔒 آمن';
+
+  document.getElementById('chatScreen').classList.remove('active');
+  document.getElementById('chatScreen').style.display = '';
+  document.getElementById('onboarding').style.display = '';
+
+  // Scroll to top
+  document.getElementById('onboarding').scrollTop = 0;
+}
+
+// ─── SYSTEM PROMPT ──────────────────────────────
+function buildSystem() {
+  const lr = profile.lang==='ar' ? 'ALWAYS reply in Arabic only, warm dialect.'
+    : profile.lang==='en' ? 'ALWAYS reply in English only.'
+    : 'Mix Arabic and English naturally, follow user\'s lead.';
+  const gr = profile.gender==='male' ? 'Address user in masculine Arabic form.'
+    : profile.gender==='female' ? 'Address user in feminine Arabic form.' : '';
+  return `You are ZAIN (زين) ⚡ — confident, empathetic AI relationship consultant.
+
+USER PROFILE (already known — do NOT ask again):
+- Language: ${profile.lang}
+- Gender: ${profile.gender}
+- Relationship type: ${profile.reltype}
+- Situation: ${profile.status||'not specified'}
+- Duration: ${profile.duration||'not specified'}
+
+LANGUAGE RULE (CRITICAL): ${lr} ${gr}
+
+PERSONALITY:
+- Confident, grounded — authority without arrogance
+- Warm, non-judgmental
+- Direct and practical
+- Emotionally intelligent — validate before advising
+
+FIRST MESSAGE: Warm personalized greeting referencing their situation. Ask ONE focused open question. Don't repeat known info.
+
+FLOW: Validate → ask → advise → actionable steps. Recommend professional help if serious harm.
+
+LIMITS: No legal advice. No diagnosis. No toxic behavior.`;
+}
+
+// ─── CHAT ENGINE ────────────────────────────────
+let messages = [];
+let isTyping = false;
+const chatEl = document.getElementById('chat');
+const inputEl = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+
+inputEl.addEventListener('input', () => {
+  inputEl.style.height='auto';
+  inputEl.style.height=Math.min(inputEl.scrollHeight,100)+'px';
+});
+inputEl.addEventListener('keydown', e=>{
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}
+});
+
+async function startChat() {
+  document.getElementById('onboarding').style.display='none';
+  const cs = document.getElementById('chatScreen');
+  cs.classList.add('active');
+
+  const th = THEMES[profile.reltypeKey||'default'];
+  document.getElementById('hdrSub').textContent =
+    `${th.emoji||'⚡'} ${profile.reltype} • ${profile.lang==='en'?'English':profile.lang==='both'?'AR+EN':'عربي'}`;
+  document.getElementById('hdrBadge').textContent = `${th.emoji||'⚡'} ${th.label||''}`;
+
+  showTyping();
+  const init = `[Onboarding complete. Lang:${profile.lang}, Gender:${profile.gender}, Rel:${profile.reltype}, Status:${profile.status||'-'}, Duration:${profile.duration||'-'}. Open session now.]`;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000,
+        system:buildSystem(), messages:[{role:'user',content:init}] })
+    });
+    const data = await res.json();
+    removeTyping();
+    const reply = data.content?.[0]?.text||'أهلاً! كيف أقدر أساعدك؟';
+    messages.push({role:'user',content:init},{role:'assistant',content:reply});
+    addMsg('ai',reply);
+  } catch(e) {
+    removeTyping();
+    addMsg('ai','⚡ في مشكلة بالاتصال. جرب مرة ثانية.');
+  }
+}
+
+function addMsg(role,text) {
+  const w=document.createElement('div'); w.className=`msg ${role}`;
+  const av=document.createElement('div'); av.className='m-av';
+  av.textContent=role==='ai'?(THEMES[profile.reltypeKey||'default']?.emoji||'⚡'):'👤';
+  const b=document.createElement('div'); b.className='bubble'; b.textContent=text;
+  w.appendChild(av); w.appendChild(b);
+  chatEl.appendChild(w); chatEl.scrollTop=chatEl.scrollHeight;
+}
+
+function showTyping() {
+  const w=document.createElement('div'); w.className='msg ai'; w.id='typing';
+  const av=document.createElement('div'); av.className='m-av';
+  av.textContent=THEMES[profile.reltypeKey||'default']?.emoji||'⚡';
+  const t=document.createElement('div'); t.className='typing';
+  t.innerHTML='<div class="td"></div><div class="td"></div><div class="td"></div>';
+  w.appendChild(av); w.appendChild(t);
+  chatEl.appendChild(w); chatEl.scrollTop=chatEl.scrollHeight;
+}
+function removeTyping(){const t=document.getElementById('typing');if(t)t.remove();}
+
+async function sendMessage() {
+  const text=inputEl.value.trim();
+  if(!text||isTyping)return;
+  isTyping=true; sendBtn.disabled=true;
+  inputEl.value=''; inputEl.style.height='auto';
+  addMsg('user',text);
+  messages.push({role:'user',content:text});
+  showTyping();
+  try {
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000,
+        system:buildSystem(), messages })
+    });
+    const data=await res.json(); removeTyping();
+    const reply=data.content?.[0]?.text||'عذراً، حصل خطأ.';
+    messages.push({role:'assistant',content:reply});
+    addMsg('ai',reply);
+  } catch(e){ removeTyping(); addMsg('ai','⚡ في مشكلة بالاتصال.'); }
+  isTyping=false; sendBtn.disabled=false; inputEl.focus();
+}
+</script>
+</body>
+</html>
