@@ -742,9 +742,9 @@ FLOW: Validate → ask → advise → actionable steps. Recommend professional h
 LIMITS: No legal advice. No diagnosis. No toxic behavior.`;
 }
 
-// ─── OPENROUTER API ──────────────────────────────
-const OR_KEY = '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';
-const OR_URL = 'https://openrouter.ai/api/v1/chat/completions';
+// ─── GROQ API ────────────────────────────────────
+const GROQ_KEY = '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';
+const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 async function callGemini(userText) {
   const sys = buildSystem();
@@ -753,7 +753,7 @@ async function callGemini(userText) {
     content: m.content
   }));
   const body = {
-    model: 'meta-llama/llama-3.3-70b-instruct:free',
+    model: 'llama-3.3-70b-versatile',
     messages: [
       { role: 'system', content: sys },
       ...history,
@@ -762,13 +762,11 @@ async function callGemini(userText) {
     max_tokens: 1000,
     temperature: 0.85
   };
-  const res = await fetch(OR_URL, {
+  const res = await fetch(GROQ_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${OR_KEY}`,
-      'HTTP-Referer': 'https://zain-app-beta.vercel.app',
-      'X-Title': 'ZAIN Relationship Consultant'
+      'Authorization': `Bearer ${GROQ_KEY}`
     },
     body: JSON.stringify(body)
   });
